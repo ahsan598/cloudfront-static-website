@@ -14,24 +14,17 @@ The website is hosted on **Amazon S3**, distributed globally via **Amazon CloudF
 ![Diagram](/assets/diagram.png)
 
 
-### 🐳 Run locally using Docker
-```sh
-# Step-1: Build Image
-docker build -t barista .
+### 📋 Prerequisites
+Before you begin, make sure the following tools and services are available:
+| Tool        | Purpose                                                     | Documentation |
+|-------------|-------------------------------------------------------------|---------------|
+| **Jenkins** | Automation server used to manage the CI/CD pipeline         | [Install Jenkins](https://www.jenkins.io/doc/book/installing/)  |
+| **AWS Account** | Required to deploy the website using S3 and CloudFront  | [Login AWS](https://aws.amazon.com/)  |
 
-# Step-2: Run as a Container
-docker run -dp 80:80 --name barista-app barista
 
-# Step-3: Access in Browser
-http://localhost:80
-```
-![Barsita](/assets/verify.png)
+### 🚀 Deploy Static website on S3
 
----
-
-## ☁️ AWS Deployment
-
-### 1. Create S3 Bucket
+**Step-1: Create S3 Bucket**
 
 | **Setting**            | **Value**                       |
 | ---------------------- | ------------------------------- |
@@ -41,8 +34,7 @@ http://localhost:80
 | Static Website Hosting | ✅ Enabled                      |
 | Index Document         | `index.html`                    |
 
-
-**S3 Bucket Policty:**
+**Step-2: S3 Bucket Policty:**
 ```json
 {
   "Version": "2012-10-17",
@@ -57,17 +49,15 @@ http://localhost:80
 }
 ```
 
-
-### 2. Create CloudFront Distribution
+**Step-3: Create CloudFront Distribution**
 - **Origin:** your S3 bucket
 - Viewer protocol policy: **Redirect HTTP → HTTPS**
 - Default root object: `index.html`
 - Wait **~10–15 minutes** for deployment
-
 Copy your **CloudFront Domain Name**.
 
+**Step-4: Jenkins AWS Credentials Setup**
 
-### 3. Jenkins AWS Credentials Setup
 **1. Create IAM User with:**
 - `AmazonS3FullAccess`
 - `CloudFrontFullAccess`
@@ -76,11 +66,11 @@ Copy your **CloudFront Domain Name**.
 - Type: **AWS Credentials**
 - ID: `aws-cred`
 
-
-### 4. Access Website
+**Step-5: Access Website**
 ```txt
 https://YOUR_CLOUDFRONT_DOMAIN
 ```
+![Barsita](/assets/output.png)
 
 ### 🧾 Summary
 - Hosted a static website on **Amazon S3**
