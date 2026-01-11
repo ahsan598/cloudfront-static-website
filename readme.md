@@ -11,7 +11,7 @@ The website is hosted on **Amazon S3**, distributed globally via **Amazon CloudF
 - **Access Management:** AWS IAM  
 
 ### 🧩 Architecture Diagram
-![Diagram](/assets/jenkins-deploy-static-site.png)
+![Diagram](/assets/diagram.png)
 
 
 ### 🐳 Run locally using Docker
