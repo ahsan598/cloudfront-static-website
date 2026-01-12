@@ -1,7 +1,7 @@
 # AWS Static Website CI/CD Project
 
 ### 🎯 Project Overview
-This project showcases a complete CI/CD pipeline for deploying a static website on the cloud.  
+This project demonstrates a complete CI/CD pipeline for deploying a static website on AWS.
 The website is hosted on **Amazon S3**, distributed globally via **Amazon CloudFront**, and continuously deployed using **Jenkins**.
 
 ### 🛠️ Tech Stack
@@ -15,14 +15,14 @@ The website is hosted on **Amazon S3**, distributed globally via **Amazon CloudF
 
 
 ### 📋 Prerequisites
-Before you begin, make sure the following tools and services are available:
-| Tool        | Purpose                                                     | Documentation |
-|-------------|-------------------------------------------------------------|---------------|
-| **Jenkins** | Automation server used to manage the CI/CD pipeline         | [Install Jenkins](https://www.jenkins.io/doc/book/installing/)  |
-| **AWS Account** | Required to deploy the website using S3 and CloudFront  | [Login AWS](https://aws.amazon.com/)  |
+
+| Tool        | Purpose                          | Documentation |
+|-------------|----------------------------------|---------------|
+| **Jenkins** | CI/CD automation server          | [Install Jenkins](https://www.jenkins.io/doc/book/installing/)  |
+| **AWS Account** | Required for S3 & CloudFront | [AWS Console](https://aws.amazon.com/)  |
 
 
-### 🚀 Deploy Static website on S3
+### 🚀 Deploying Static website on S3
 
 **Step-1: Create S3 Bucket**
 
@@ -34,7 +34,7 @@ Before you begin, make sure the following tools and services are available:
 | Static Website Hosting | ✅ Enabled                      |
 | Index Document         | `index.html`                    |
 
-**Step-2: S3 Bucket Policty:**
+**Step-2: Apply S3 Bucket Policty:**
 ```json
 {
   "Version": "2012-10-17",
@@ -49,28 +49,63 @@ Before you begin, make sure the following tools and services are available:
 }
 ```
 
+![S3 Bucket](/assets/s3-bucket.png)
+
 **Step-3: Create CloudFront Distribution**
-- **Origin:** your S3 bucket
-- Viewer protocol policy: **Redirect HTTP → HTTPS**
-- Default root object: `index.html`
-- Wait **~10–15 minutes** for deployment
-Copy your **CloudFront Domain Name**.
+- Go to **CloudFront → Create distribution**
+- Choose plan: **Free**
+- Distribution name: `barista-cafe-website`
+- Origin: Your **S3 bucket**
+- Create distribution and wait **~3–5 minutes**
+
+Copy your **CloudFront ID**.
+
+![CloudFront](/assets/cdn.png)
+
 
 **Step-4: Jenkins AWS Credentials Setup**
 
-**1. Create IAM User with:**
-- `AmazonS3FullAccess`
-- `CloudFrontFullAccess`
+**1. Create IAM User with access key**
+- Go to **IAM → Users → Create user**
+- User name: `jenkins-user`
+- Select Programmatic access: `CLI`
+- Attach permissions:
+  - `AmazonS3FullAccess`
+  - `CloudFrontFullAccess`
+- Create user and download **Access Key & Secret**
 
-**2. Add credentials in Jenkins:**
-- Type: **AWS Credentials**
-- ID: `aws-cred`
+**2. Configure Jenkins Credentials**
+
+Jenkins → Manage Jenkins → **Credentials → Add Credentials**
+| Field      | Value               |
+| ---------- | ------------------- |
+| Kind       | **AWS Credentials** |
+| ID         | `aws-cred`          |
+| Access Key | **From IAM**        |
+| Secret Key | **From IAM**        |
+
+![Jenkins-IAM](/assets/jenkins-user.png)
 
 **Step-5: Access Website**
 ```txt
 https://YOUR_CLOUDFRONT_DOMAIN
 ```
 ![Barsita](/assets/output.png)
+
+
+### 🧹 Cleanup Resources (Important)
+
+**To avoid AWS charges:**
+
+**1. Delete CloudFront Distribution:**
+  CloudFront → Select distribution → Disable → Delete
+
+**2. Delete S3 Bucket:**
+  S3 → Empty bucket → Delete bucket
+
+**3. Delete IAM User:**
+  IAM → Users → Delete jenkins-user
+
 
 ### 🧾 Summary
 - Hosted a static website on **Amazon S3**
