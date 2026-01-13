@@ -1,4 +1,4 @@
-# AWS Static Website CI/CD Project
+# Automated Deployment of Static Website using S3, CloudFront & Jenkins
 
 ### 🎯 Project Overview
 This project demonstrates a complete CI/CD pipeline for deploying a static website on AWS.
