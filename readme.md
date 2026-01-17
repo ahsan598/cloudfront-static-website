@@ -1,17 +1,18 @@
-# Automated Deployment of Static Website using S3, CloudFront & Jenkins
+# Barista Static Website with AWS S3, CloudFront & Jenkins CI/CD
 
 ### 🎯 Project Overview
-This project demonstrates a complete CI/CD pipeline for deploying a static website on AWS.
-The website is hosted on **Amazon S3**, distributed globally via **Amazon CloudFront**, and continuously deployed using **Jenkins**.
+This project demonstrates the automated deployment of a **static Barista website** using AWS services and **Jenkins CI/CD**. The website is hosted on **Amazon S3**, delivered via **CloudFront CDN**, and automatically updated through a Jenkins pipeline whenever new changes are pushed to **GitHub**.
 
-### 🛠️ Tech Stack
-- **CI/CD Automation:** Jenkins  
-- **Static Website Hosting:** Amazon S3  
-- **Content Delivery Network (CDN):** Amazon CloudFront  
-- **Access Management:** AWS IAM  
+**Tech Stack**
+- **AWS S3** – Static Hosting  
+- **AWS CloudFront** – CDN & HTTPS  
+- **Jenkins** – CI/CD Automation  
+- **Git/GitHub** – Version Control  
+- **HTML, CSS, JavaScript** – Frontend
+
 
 ### 🧩 Architecture Diagram
-![Diagram](/assets/diagram.png)
+![Diagram](./assets/diagram.png)
 
 
 ### 📋 Prerequisites
@@ -49,7 +50,7 @@ The website is hosted on **Amazon S3**, distributed globally via **Amazon CloudF
 }
 ```
 
-![S3 Bucket](/assets/s3-bucket.png)
+![S3 Bucket](./assets/s3-bucket.png)
 
 **Step-3: Create CloudFront Distribution**
 - Go to **CloudFront → Create distribution**
@@ -60,7 +61,7 @@ The website is hosted on **Amazon S3**, distributed globally via **Amazon CloudF
 
 Copy your **CloudFront ID**.
 
-![CloudFront](/assets/cdn.png)
+![CloudFront](./assets/cdn.png)
 
 
 **Step-4: Jenkins AWS Credentials Setup**
@@ -84,13 +85,13 @@ Jenkins → Manage Jenkins → **Credentials → Add Credentials**
 | Access Key | **From IAM**        |
 | Secret Key | **From IAM**        |
 
-![Jenkins-IAM](/assets/jenkins-user.png)
+![Jenkins-IAM](./assets/jenkins-user.png)
 
 **Step-5: Access Website**
 ```txt
 https://YOUR_CLOUDFRONT_DOMAIN
 ```
-![Barsita](/assets/output.png)
+![Barsita](./assets/output.png)
 
 
 ### 🧹 Cleanup Resources (Important)
